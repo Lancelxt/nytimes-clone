@@ -1,0 +1,63 @@
+.Navbar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: space-around; */
+    gap:296px;
+    justify-content: center;
+    padding: 8px 8px;
+    border-bottom: 1px solid #e2e2e2;
+    box-shadow: 0 0 5px 1px rgba(0,0,0,0.28);
+}
+
+.leftNav{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+
+}
+.search-icon{
+    height: 16px;
+    cursor: pointer;
+}
+
+.menu-icon{
+    height: 16px;
+    cursor: pointer;
+
+}
+
+.tt{
+    font-size: 14.25px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    -webkit-letter-spacing: 0.7px;
+    -moz-letter-spacing: 0.7px;
+    -ms-letter-spacing: 0.7px;
+    letter-spacing: 0.7px;
+    line-height: 19px;
+}
+
+.navLogo{
+    width: 195px;
+    height: 26.48px;
+}
+
+.nav-btn{
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.6s ease 0s;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: rgb(86, 123, 149);
+    border: 1px solid rgb(50, 104, 145);
+    font-size: 11px;
+    line-height: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    color: rgb(255, 255, 255);
+    margin-right: 7px;
+}
