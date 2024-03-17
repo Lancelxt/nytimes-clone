@@ -1,37 +1,88 @@
-import { useEffect, useState } from "react";
-import { fetchDataFromApi } from "../Utils/api";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-interface ApiResponse {
-    results:any    
+const BASE_URL = 'https://api.nytimes.com/svc/';
+const API_KEY = 'y60FlDGALrUJ9n85oed2h8AtJsrKLZV5';
+
+interface Result {
+    created_date:string
+    multimedia:any;
+  uri: string;
+  url: string;
+  id: string;
+  asset_id: number;
+  source: string;
+  published_date: string;
+  updated: string;
+  section: string;
+  subsection: string;
+  nytdsection: string;
+  adx_keywords: string;
+  column: string;
+  byline: string;
+  type: string;
+  title: string;
+  abstract: string;
+  des_facet: Array<string>;
+  org_facet: Array<string>;
+  per_facet: Array<string>;
+  geo_facet: Array<string>;
+  media: Array<{
+    type: string;
+    subtype: string;
+    caption: string;
+    copyright: string;
+    approved_for_syndication: number;
+    media_metadata: Array<{
+      url: string;
+      format: string;
+      height: number;
+      width: number;
+    }>;
+  }>;
+  eta_id: number;
 }
 
-
-interface State {
-  data: ApiResponse | null;
-  loading: boolean | string | null;
-  error: string | null;
+interface Data {
+  status: string;
+  copyright: string;
+  section: string;
+  last_updated: string;
+  num_results: number;
+  results: Array<Result>;
 }
 
-const useFetch = (url: string) => {
-  const [state, setState] = useState<State>({
-    data: null,
-    loading: null,
-    error: null
-  });
+interface Error {
+  message: string;
+}
+
+interface FetchState {
+  data: Data | null;
+  loading: boolean;
+  error: Error | null;
+}
+
+const useFetch = (url: string): FetchState => {
+  const [data, setData] = useState<Data | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    setState({ data: null, loading: "loading...", error: null });
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<Data>(BASE_URL + url + API_KEY);
+        setData(response.data);
+        setLoading(false);
+      } catch (err: any) {
+        setError({ message: err.message });
+        setLoading(false);
+      }
+    };
 
-    fetchDataFromApi(url)
-      .then((res: ApiResponse) => {
-        setState({ data: res, loading: false, error: null });
-      })
-      .catch((err: Error) => {
-        setState({ data: null, loading: false, error: "Something went wrong!" });
-      });
+    fetchData();
   }, [url]);
 
-  return state;
+  return { data, loading, error };
 };
 
 export default useFetch;
